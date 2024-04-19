@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style5.css">
+    <title>donate</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        .error {
+          display: none;
+          color: red;
+          margin-top: 5px;
+        }
+
+        .error.show {
+          display: block;
+        }
+
+        input.invalid {
+          border: 1px solid red;
+        }
+    </style>
+</head>
+
+<script>
+function validateForm(event) {
+  event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+
+  // Récupérer les valeurs des champs
+  var cin = document.getElementById('cin1').value;
+  var email = document.getElementById('email1').value;
+  var telephone = document.getElementById('tel1').value;
+  var nom = document.getElementById('nom1').value;
+  var prenom = document.getElementById('prenom1').value;
+  var pourquoi = document.getElementById('pourquoi1').value;
+  var disponibilite = document.getElementById('dateDisponibilite').value;
+
+  // Récupérer les éléments des messages d'erreur
+  var cinError = document.getElementById('cinError');
+  var emailError = document.getElementById('emailError');
+  var telError = document.getElementById('telError');
+  var nomError = document.getElementById('nomError');
+  var prenomError = document.getElementById('prenomError');
+  var pourquoiError = document.getElementById('pourquoiError');
+  var disponibiliteError = document.getElementById('disponibiliteError');
+
+  // Réinitialiser les messages d'erreur et les classes invalides
+  cinError.textContent = '';
+  emailError.textContent = '';
+  telError.textContent = '';
+  nomError.textContent = '';
+  prenomError.textContent = '';
+  pourquoiError.textContent = '';
+  disponibiliteError.textContent = '';
+
+  var inputs = document.getElementsByTagName('input');
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].classList.remove('invalid');
+  }
+
+  // Variable pour stocker les messages d'erreur
+  var errors = [];
+
+  // Vérifier si les champs sont vides
+  if (cin === '') {
+    errors.push('Le champ CIN est manquant');
+    document.getElementById('cin1').classList.add('invalid');
+  }
+
+  if (email === '') {
+    errors.push('Le champ Email est manquant');
+    document.getElementById('email1').classList.add('invalid');
+  }
+
+  if (telephone === '') {
+    errors.push('Le champ Numéro de téléphone est manquant');
+    document.getElementById('tel1').classList.add('invalid');
+  }
+
+  if (nom === '') {
+    errors.push('Le champ Nom est manquant');
+    document.getElementById('nom1').classList.add('invalid');
+  }
+
+  if (prenom === '') {
+    errors.push('Le champ Prénom est manquant');
+    document.getElementById('prenom1').classList.add('invalid');
+  }
+
+  if (pourquoi === '') {
+    errors.push('Le champ Description des dons est manquant');
+    document.getElementById('pourquoi1').classList.add('invalid');
+  }
+  
+  if (disponibilite === '') {
+    errors.push('Le champ Disponibilité est manquant');
+    document.getElementById('dateDisponibilite').classList.add('invalid');
+  }
+
+  // Valider le format du CIN
+  var cinRegex = /^\d{8}$/;
+  if (cin !== '' && !cinRegex.test(cin)) {
+    errors.push('CIN incorrect');
+    document.getElementById('cin1').classList.add('invalid');
+  }
+
+  // Valider le format de l'adresse e-mail
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email !== '' && !emailRegex.test(email)) {
+    errors.push('Email incorrect');
+    document.getElementById('email1').classList.add('invalid');
+  }
+
+  // Valider le format du numéro de téléphone
+  if (telephone !== '' && (telephone.length !== 8 || isNaN(telephone))) {
+    errors.push('Numéro de téléphone incorrect');
+    document.getElementById('tel1').classList.add('invalid');
+  }
+
+  // Afficher les messages d'erreur après le clic sur le bouton "Envoyer" s'il y a des erreurs
+  if (errors.length > 0) {
+    errors.forEach(function (error) {
+      if (error.includes('CIN')) {
+        cinError.textContent = error;
+        cinError.classList.add('show');
+      }
+      if (error.includes('Email')) {
+        emailError.textContent = error;
+        emailError.classList.add('show');
+      }
+      if (error.includes('Numéro de téléphone')) {
+        telError.textContent = error;
+        telError.classList.add('show');
+      }
+      if (error.includes('Nom')) {
+        nomError.textContent = error;
+        nomError.classList.add('show');
+      }
+      if (error.includes('Prénom')) {
+        prenomError.textContent = error;
+        prenomError.classList.add('show');
+      }
+      if (error.includes('Description des dons')) {
+        pourquoiError.textContent = error;
+        pourquoiError.classList.add('show');
+      }
+      if (error.includes('Disponibilité')) {
+        disponibiliteError.textContent = error;
+        disponibiliteError.classList.add('show');
+      }
+    });
+
+    cinError.style.display = 'block';
+    emailError.style.display = 'block';
+    telError.style.display = 'block';
+    nomError.style.display = 'block';
+    prenomError.style.display = 'block';
+    pourquoiError.style.display = 'block';
+    disponibiliteError.style.display = 'block';
+
+    return false; // Empêcher l'envoi du formulaire
+  } else {
+    cinError.textContent = ''; // Réinitialiser le message d'erreur du CIN
+    emailError.textContent = ''; // Réinitialiser le message d'erreur de l'e-mail
+    telError.textContent = ''; // Réinitialiser le message d'erreur du numéro de téléphone
+    nomError.textContent = ''; // Réinitialiser le message d'erreur du nom
+    prenomError.textContent = ''; // Réinitialiser le message d'erreur du prénom
+    pourquoiError.textContent = ''; // Réinitialiser le message d'erreur de la description des dons
+    disponibiliteError.textContent = ''; // Réinitialiser le message d'erreur de la date de disponibilité
+  }
+
+  // Si toutes les validations sont passées, le formulaire est valide
+  document.getElementById('myForm').submit();
+}
+
+document.getElementById('myForm').addEventListener('submit', validateForm);
+
+</script>
+
+<body>
+  <section>
+      <div class="container">
+          <nav>
+              <a href="Page d'accueil.html">
+                  <img src="logo.png" alt="logo" width="100px">
+              </a>
+              <ul> 
+                  <li><a href="a propos de nous.html">A Propos De Nous </a></li>
+                  <li><a href="Actualités.html">Actualité </a></li>
+                  <li><a href="nous rejoindre.html">nous rejoindre </a></li>
+              </ul>
+          </nav>
+          <div class="content">
+              <div class="formulaire">
+                <form action="donate.php" method="POST" id="myForm" novalidate onsubmit="return validateForm(event)">   
+                      <div>
+                          <label for="nom">Nom:</label>
+                          <input autofocus minlength="3" maxlength="10" type="text" id="nom1" name="nom1" placeholder="donner votre nom" required>
+                          <span id="nomError" class="error"></span>
+                      </div>
+                  
+                      <div>
+                          <label for="prenom">Prénom:</label>
+                          <input minlength="3" maxlength="10" type="text" id="prenom1" name="prenom1" placeholder="donner votre prenom" required><br><br>
+                          <span id="prenomError" class="error"></span>
+                      </div>
+                 
+                      <div>
+                          <label for="cin">CIN:</label>
+                          <input minlength="8" maxlength="8" type="number" id="cin1" name="cin1" placeholder="donner votre cin" required ><br><br>
+                          <span id="cinError" class="error"></span> 
+                      </div>
+                      
+                      <div>
+                          <label for="tel">Numéro de téléphone:</label>
+                          <input minlength="8" maxlength="8" type="tel" id="tel1" name="tel1" placeholder="donner votre tlf" required><br><br>
+                          <span id="telError" class="error"></span>
+                      </div>
+                          
+                      <div>
+                          <label for="date">Date de naissance:</label>
+                          <input type="date" id="dateNaissance1" name="dateNaissance1" placeholder="donner votre date de naissance" required ><br><br> 
+                      </div>
+                      <div>
+                          <label for="mail">Email:</label>
+                          <input type="email" id="email1" name="email1" placeholder="donner votre email" required><br><br>
+                          <span id="emailError" class="error"></span>
+                      </div>
+      
+                      <div>
+                          <label for="genre">Genre:</label>
+                          <input type="radio" id="genre1" name="genre1" value="homme" required>
+                          <label for="homme">Homme</label>
+                          <input type="radio" id="genre1" name="genre1" value="femme" required>
+                          <label for="femme">Femme</label><br><br>
+                      </div>
+      
+                      <div>
+                          <label for="membre">Etes-vous membre de notre association?:</label>
+                          <input type="radio" id="membre1" name="membre1" value="oui" required>
+                          <label for="oui">Oui</label>
+                          <input type="radio" id="membre1" name="membre1" value="non" required>
+                          <label for="non">Non</label><br><br>
+
+                      </div>
+      
+                      <div>
+                          <label for="pourquoi">Description des dons:</label>
+                          <textarea rows="3" cols="40" id="pourquoi1" name="pourquoi1" ></textarea><br><br>
+                          <span id="pourquoiError" class="error"></span>
+                      </div>
+                      <div>
+                          <label for="date">Date de disponibilité:</label>
+                          <input type="date" id="dateDisponibilite" name="dateDisponibilite" placeholder="donner votre date de disponibilité" required ><br><br> 
+                          <span id="disponibiliteError" class="error"></span>
+                        </div>
+                      <div>
+                          <input type="submit" value="Envoyer">
+                      </div>
+                      <div id="errorContainer"></div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </section>
+  <footer>
+    <div class="icons">
+        <a href="https://www.facebook.com/profile.php?id=100070017423808"><ion-icon name="logo-facebook"></ion-icon></a>
+        <a href="https://www.instagram.com/hannibalcharity/?fbclid=IwAR2J9aosodLqEAyNTuvHjfrkBAiO66dIDo--aKT_fXUwROP-q7ifusDiGpY"><ion-icon name="logo-instagram"></ion-icon></a>  
+        <a href="https://vymaps.com/TN/Hannibal-Charity-143121879522949/"><ion-icon name="logo-google"></ion-icon></a>
+    </div>        
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    
+    <p>&copy; 2023 MED AMINE BOUJELBENE, SULTAN FRIKHA.</p>
+  </footer>
+</body>
+</html>

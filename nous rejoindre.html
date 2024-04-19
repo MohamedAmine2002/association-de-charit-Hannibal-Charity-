@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title> Nous rejoindre</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        .error {
+          display: none;
+          color: red;
+          margin-top: 5px;
+        }
+
+        .error.show {
+          display: block;
+        }
+
+        input.invalid {
+          border: 1px solid red;
+        }
+    </style>
+</head>
+
+<script>
+function validateForm(event) {
+  event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+
+  // Récupérer les valeurs des champs
+  var cin = document.getElementById('cin').value;
+  var email = document.getElementById('mail').value;
+  var telephone = document.getElementById('tel').value;
+  var nom = document.getElementById('nom').value;
+  var prenom = document.getElementById('prenom').value;
+  var pourquoi = document.getElementById('pourquoi').value;
+
+  // Récupérer les éléments des messages d'erreur
+  var cinError = document.getElementById('cinError');
+  var emailError = document.getElementById('emailError');
+  var telError = document.getElementById('telError');
+  var nomError = document.getElementById('nomError');
+  var prenomError = document.getElementById('prenomError');
+  var pourquoiError = document.getElementById('pourquoiError');
+
+  // Réinitialiser les messages d'erreur et les classes invalides
+  cinError.textContent = '';
+  emailError.textContent = '';
+  telError.textContent = '';
+  nomError.textContent = '';
+  prenomError.textContent = '';
+  pourquoiError.textContent = '';
+
+  var inputs = document.getElementsByTagName('input');
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].classList.remove('invalid');
+  }
+
+  // Variable pour stocker les messages d'erreur
+  var errors = [];
+
+  // Vérifier si les champs sont vides
+  if (cin === '') {
+    errors.push('Le champ CIN est manquant');
+    document.getElementById('cin').classList.add('invalid');
+  }
+
+  if (email === '') {
+    errors.push('Le champ Email est manquant');
+    document.getElementById('mail').classList.add('invalid');
+  }
+
+  if (telephone === '') {
+    errors.push('Le champ Numéro de téléphone est manquant');
+    document.getElementById('tel').classList.add('invalid');
+  }
+
+  if (nom === '') {
+    errors.push('Le champ Nom est manquant');
+    document.getElementById('nom').classList.add('invalid');
+  }
+
+  if (prenom === '') {
+    errors.push('Le champ Prénom est manquant');
+    document.getElementById('prenom').classList.add('invalid');
+  }
+
+  if (pourquoi === '') {
+    errors.push('Le champ Pourquoi souhaitez-vous rejoindre Hannibal Association? est manquant');
+    document.getElementById('pourquoi').classList.add('invalid');
+  }
+
+  // Valider le format du CIN
+  var cinRegex = /^\d{8}$/;
+  if (cin !== '' && !cinRegex.test(cin)) {
+    errors.push('CIN incorrect');
+    document.getElementById('cin').classList.add('invalid');
+  }
+
+  // Valider le format de l'adresse e-mail
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email !== '' && !emailRegex.test(email)) {
+    errors.push('Email incorrect');
+    document.getElementById('mail').classList.add('invalid');
+  }
+
+  // Valider le format du numéro de téléphone
+  if (telephone !== '' && (telephone.length !== 8 || isNaN(telephone))) {
+    errors.push('Numéro de téléphone incorrect');
+    document.getElementById('tel').classList.add('invalid');
+  }
+
+  // Afficher les messages d'erreur après le clic sur le bouton "Envoyer" s'il y a des erreurs
+  if (errors.length > 0) {
+    errors.forEach(function (error) {
+      if (error.includes('CIN')) {
+        cinError.textContent = error;
+        cinError.classList.add('show');
+      }
+      if (error.includes('Email')) {
+        emailError.textContent = error;
+        emailError.classList.add('show');
+      }
+      if (error.includes('Numéro de téléphone')) {
+        telError.textContent = error;
+        telError.classList.add('show');
+      }
+      if (error.includes('Nom')) {
+        nomError.textContent = error;
+        nomError.classList.add('show');
+      }
+      if (error.includes('Prénom')) {
+        prenomError.textContent = error;
+        prenomError.classList.add('show');
+      }
+      if (error.includes('Pourquoi souhaitez-vous rejoindre Hannibal Association?')) {
+        pourquoiError.textContent = error;
+        pourquoiError.classList.add('show');
+      }
+    });
+
+    cinError.style.display = 'block';
+    emailError.style.display = 'block';
+    telError.style.display = 'block';
+    nomError.style.display = 'block';
+    prenomError.style.display = 'block';
+    pourquoiError.style.display = 'block';
+
+    return false; // Empêcher l'envoi du formulaire
+  } else {
+    cinError.textContent = ''; // Réinitialiser le message d'erreur du CIN
+    emailError.textContent = ''; // Réinitialiser le message d'erreur de l'e-mail
+    telError.textContent = ''; // Réinitialiser le message d'erreur du numéro de téléphone
+    nomError.textContent = ''; // Réinitialiser le message d'erreur du nom
+    prenomError.textContent = ''; // Réinitialiser le message d'erreur du prénom
+    pourquoiError.textContent = ''; // Réinitialiser le message d'erreur de la raison
+  }
+
+  // Si toutes les validations sont passées, le formulaire est valide
+  document.getElementById('myForm').submit();
+}
+</script>
+
+<body>
+    <section>
+    <div class="container">
+        <nav>
+            <a href="Page d'accueil.html">
+                <img src="logo.png" alt="logo" width="100px">
+            </a>
+            <ul> 
+                <li><a href="a propos de nous.html">A Propos De Nous </a></li>
+                <li><a href="Actualités.html">Actualité </a></li>
+                <li><a href="nous rejoindre.html">nous rejoindre </a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <div class="formulaire">
+                <!--***********************************-->
+                <form action="nous-rejoindre.php" method="POST" id="myForm" novalidate onsubmit="return validateForm(event)">   
+                    <div>
+                        <label for="nom">Nom:</label>
+                        <input autofocus minlength="3" maxlength="10" type="text" id="nom" name="nom" placeholder="Donnez votre nom">
+                        <span id="nomError" class="error"></span>
+                    </div>
+                
+                    <div>
+                        <label for="prenom">Prénom:</label>
+                        <input minlength="3" maxlength="10" type="text" id="prenom" name="prenom" placeholder="Donnez votre prénom"><br><br>
+                        <span id="prenomError" class="error"></span>
+                    </div>
+               
+                    <div>
+                        <label for="cin">CIN:</label>
+                        <input minlength="8" maxlength="8" type="number" id="cin" name="cin" placeholder="Donnez votre CIN"><br><br> 
+                        <span id="cinError" class="error"></span>
+                    </div>
+                    
+                    <div>
+                        <label for="tel">Numéro de téléphone:</label>
+                        <input minlength="8" maxlength="8" type="tel" id="tel" name="tel" placeholder="Donnez votre numéro de téléphone"><br><br>
+                        <span id="telError" class="error"></span>
+                    </div>
+                        
+                    <div>
+                        <label for="date">Date de naissance:</label>
+                        <!-- <input type="date" id="date" name="date de naissance" placeholder="Donnez votre date de naissance"><br><br>  -->
+                        <input type="date" id="date" name="date" placeholder="Donnez votre date de naissance"><br><br> 
+
+                       
+                    </div>
+                    <div>
+                        <label for="mail">Email:</label>
+                        <input type="email" id="mail" name="email" placeholder="Donnez votre email"><br><br>
+                        <span id="emailError" class="error"></span>
+                    </div>
+    
+                    <div>
+                        <label for="genre">Genre:</label>
+                        <input type="radio" id="homme" name="genre" value="homme">
+                        <label for="homme">Homme</label>
+                        <input type="radio" id="femme" name="genre" value="femme">
+                        <label for="femme">Femme</label>
+                    </div>
+        
+                    <div>
+                        <label for="pourquoi">Pourquoi souhaitez-vous rejoindre Hannibal Association?</label>
+                        <textarea rows="3" cols="40" id="pourquoi" name="pourquoi"></textarea>
+                        <span id="pourquoiError" class="error"></span>
+                    </div>
+                
+                    <div>
+                        <input type="submit" value="Envoyer">
+                    </div>
+                    <div id="errorContainer"></div>
+                </form>
+               
+            </div>
+        </div>
+   
+    </div>
+
+</section>
+    <footer>
+        <div class="icons">
+            <a href="https://www.facebook.com/profile.php?id=100070017423808"><ion-icon name="logo-facebook"></ion-icon></a>
+            <a href="https://www.instagram.com/hannibalcharity/?fbclid=IwAR2J9aosodLqEAyNTuvHjfrkBAiO66dIDo--aKT_fXUwROP-q7ifusDiGpY"><ion-icon name="logo-instagram"></ion-icon></a>  
+            <a href="https://vymaps.com/TN/Hannibal-Charity-143121879522949/"><ion-icon name="logo-google"></ion-icon></a>
+        </div>        
+        <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+        
+        <p>&copy; 2023 MED AMINE BOUJELBENE, SULTAN FRIKHA.</p>
+    </footer>
+    
+    </body>
+
+</html>
